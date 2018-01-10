@@ -1,11 +1,11 @@
 apply plugin: 'com.android.library'
 
 android {
-    compileSdkVersion 26
+    compileSdkVersion 27
 
     defaultConfig {
-        minSdkVersion 15
-        targetSdkVersion 26
+        minSdkVersion 18
+        targetSdkVersion 27
         versionCode 1
         versionName "1.0"
 
@@ -23,7 +23,7 @@ android {
 }
 
 dependencies {
-    implementation 'com.android.support:support-annotations:26.1.0'
+    implementation 'com.android.support:support-annotations:27.0.2'
 }
 
 apply from: 'https://raw.githubusercontent.com/sensorberg-dev/GitAsMaven/master/publish-bitbucket.gradle'
