@@ -8,6 +8,8 @@ import android.bluetooth.BluetoothGattDescriptor;
 import android.bluetooth.BluetoothProfile;
 import android.content.Context;
 import android.os.Build;
+import android.os.Handler;
+import android.os.Looper;
 
 import com.sensorberg.synchronousgatt.result.OnCharacteristicChanged;
 import com.sensorberg.synchronousgatt.result.OnCharacteristicRead;
@@ -27,26 +29,38 @@ public class SynchronousGatt {
 
 	private final Callbacks callback;
 	private final BluetoothDevice device;
-	private BluetoothGatt gatt;
+	private final Handler uiHandler;
+	private volatile BluetoothGatt gatt;
 
 	public SynchronousGatt(BluetoothDevice device) {
 		this.device = device;
 		this.callback = new Callbacks();
-	}
+        uiHandler = new Handler(Looper.getMainLooper());
+    }
 
 	public BluetoothGatt getBluetoothGatt() {
 		return gatt;
 	}
 
 	@TargetApi(Build.VERSION_CODES.M)
-	public OnConnectionStateChange connectGatt(Context context, boolean autoConnect, int transport, long timeout) throws UnexpectedResultException, UnexpectedDisconnectionException, NoResultException, TimeoutException {
-		gatt = device.connectGatt(context, autoConnect, callback, transport);
-		return getResult(OnConnectionStateChange.class, timeout);
+	public OnConnectionStateChange connectGatt(final Context context, final boolean autoConnect, final int transport, long timeout) throws UnexpectedResultException, UnexpectedDisconnectionException, NoResultException, TimeoutException {
+        uiHandler.post(new Runnable() {
+            @Override
+            public void run() {
+                gatt = device.connectGatt(context, autoConnect, callback, transport);
+            }
+        });
+        return getResult(OnConnectionStateChange.class, timeout);
 	}
 
-	public OnConnectionStateChange connectGatt(Context context, boolean autoConnect, long timeout) throws UnexpectedResultException, UnexpectedDisconnectionException, NoResultException, TimeoutException {
-		gatt = device.connectGatt(context, autoConnect, callback);
-		return getResult(OnConnectionStateChange.class, timeout);
+	public OnConnectionStateChange connectGatt(final Context context, final boolean autoConnect, long timeout) throws UnexpectedResultException, UnexpectedDisconnectionException, NoResultException, TimeoutException {
+        uiHandler.post(new Runnable() {
+            @Override
+            public void run() {
+                gatt = device.connectGatt(context, autoConnect, callback);
+            }
+        });
+        return getResult(OnConnectionStateChange.class, timeout);
 	}
 
 	public OnServicesDiscovered discoverServices(long timeout) throws UnexpectedResultException, UnexpectedDisconnectionException, NoResultException, TimeoutException {
@@ -96,8 +110,13 @@ public class SynchronousGatt {
 	}
 
 	public OnConnectionStateChange disconnect(long timeout) throws UnexpectedResultException, UnexpectedDisconnectionException, NoResultException, TimeoutException {
-		gatt.disconnect();
-		return getResult(OnConnectionStateChange.class, timeout);
+        uiHandler.post(new Runnable() {
+            @Override
+            public void run() {
+                if (gatt != null) gatt.disconnect();
+            }
+        });
+        return getResult(OnConnectionStateChange.class, timeout);
 	}
 
 	public boolean setCharacteristicNotification(BluetoothGattCharacteristic characteristic, boolean enable) {
@@ -123,9 +142,14 @@ public class SynchronousGatt {
 		throw new NoResultException();
 	}
 
-	public void close() {
-		gatt.close();
-	}
+    public void close() {
+        uiHandler.post(new Runnable() {
+            @Override
+            public void run() {
+                if (gatt != null) gatt.close();
+            }
+        });
+    }
 
 	public void abortReliableWrite() {
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
