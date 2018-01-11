@@ -26,4 +26,4 @@ dependencies {
     implementation 'com.android.support:support-annotations:27.0.2'
 }
 
-apply from: 'https://raw.githubusercontent.com/sensorberg-dev/GitAsMaven/master/publish-bitbucket.gradle'
+apply from: 'https://raw.githubusercontent.com/sensorberg-dev/gradle-scripts/master/publish-private-maven-repo.gradle'
