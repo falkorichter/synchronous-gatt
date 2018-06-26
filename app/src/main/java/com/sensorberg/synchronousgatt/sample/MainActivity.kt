@@ -43,6 +43,7 @@ class MainActivity : AppCompatActivity(), BitteBitte {
 			Log.i("SyncGatt", "Starting Gatt Connection")
 			try {
 				SynchronousGatt(scanResult.device).apply {
+					val startMillis = System.currentTimeMillis()
 					connectGatt(this@MainActivity, false, 10000)
 					discoverServices(3000)
 
@@ -54,12 +55,14 @@ class MainActivity : AppCompatActivity(), BitteBitte {
 					writeDescriptor(notify, 3000)
 
 					val writeCharacteristic = bluetoothGatt.getService(serviceUuid).getCharacteristic(characteristicWrite)
-					writeCharacteristic.setValue("open door")
+					writeCharacteristic.setValue("open door\n")
 					writeCharacteristic(writeCharacteristic, 3000)
 
-					val changed = awaitCharacteristicChange(5000)
-					onResult(changed.characteristic.getStringValue(0))
+					//val changed = awaitCharacteristicChange(5000)
+					//onResult(changed.characteristic.getStringValue(0))
 					disconnect(1000)
+					val time = System.currentTimeMillis() - startMillis
+					onResult("success! after $time ms")
 				}
 			} catch (e: Exception) {
 				onResult(e.message ?: e.toString())
