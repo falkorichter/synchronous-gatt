@@ -5,7 +5,7 @@ android {
 	compileSdkVersion 27
 	defaultConfig {
 		applicationId "com.sensorberg.synchronousgatt.sample"
-		minSdkVersion 18
+		minSdkVersion 23
 		targetSdkVersion 27
 		versionCode 1
 		versionName "1.0"
@@ -22,9 +22,10 @@ android {
 dependencies {
 	implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 	implementation project(':library')
+	implementation "com.jakewharton.timber:timber:4.7.1"
 	implementation 'com.android.support:appcompat-v7:27.1.1'
 	implementation 'com.android.support:recyclerview-v7:27.1.1'
 	implementation 'com.sensorberg.libs:permission-bitte:0.2.2'
 	implementation 'no.nordicsemi.android.support.v18:scanner:1.1.0'
-	implementation 'com.android.support.constraint:constraint-layout:1.1.2'
+	implementation 'com.android.support.constraint:constraint-layout:1.1.3'
 }

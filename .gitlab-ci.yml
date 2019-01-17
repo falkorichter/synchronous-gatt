@@ -1,0 +1,37 @@
+image: bitriseio/docker-android:latest
+
+variables:
+  GRADLE_USER_HOME: $CI_PROJECT_DIR/.gradle
+
+cache:
+  key: $CI_PROJECT_NAME
+  paths:
+  - .gradle/wrapper
+  - .gradle/caches
+
+deploy_snapshot:
+  stage: deploy
+  artifacts:
+    when: always
+    paths:
+    - library/build/outputs/aar
+  tags:
+  - docker
+  only:
+  - master
+  script:
+  - export IS_SNAPSHOT=true
+  - ./gradlew clean uploadArchives
+
+deploy_release:
+  stage: deploy
+  artifacts:
+    when: always
+    paths:
+    - library/build/outputs/aar
+  tags:
+  - docker
+  only:
+  - tags
+  script:
+  - ./gradlew uploadArchives
