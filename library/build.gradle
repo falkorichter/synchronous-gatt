@@ -1,29 +1,42 @@
 apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+apply plugin: "com.vanniktech.maven.publish"
 
 android {
-    compileSdkVersion 27
+	compileSdkVersion 27
 
-    defaultConfig {
-        minSdkVersion 18
-        targetSdkVersion 27
-        versionCode 1
-        versionName "1.0"
+	defaultConfig {
+		minSdkVersion 21
+		targetSdkVersion 27
+		versionCode 1
+		versionName "1.0"
 
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+		testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
-    }
+	}
 
-    buildTypes {
-        release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-        }
-    }
+	buildTypes {
+		release {
+			minifyEnabled false
+			proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+		}
+	}
 
 }
 
 dependencies {
-    implementation 'com.android.support:support-annotations:27.1.1'
+	implementation 'com.android.support:support-annotations:27.1.1'
+	implementation "com.sensorberg.libs:executioner:0.4.1"
+	implementation "com.jakewharton.timber:timber:4.7.1"
 }
 
-apply from: 'https://raw.githubusercontent.com/sensorberg-dev/gradle-scripts/master/publish-private-maven-repo.gradle'
+mavenPublish {
+	targets {
+		uploadArchives {
+			releaseRepositoryUrl = findProperty("MAVEN_URL", null)
+			snapshotRepositoryUrl = findProperty("MAVEN_URL_SNAPSHOT", null)
+			repositoryUsername = findProperty("MAVEN_USERNAME", null)
+			repositoryPassword = findProperty("MAVEN_PASSWORD", null)
+		}
+	}
+}
