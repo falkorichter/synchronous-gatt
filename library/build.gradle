@@ -33,6 +33,7 @@ dependencies {
 mavenPublish {
 	targets {
 		uploadArchives {
+			signing = false
 			releaseRepositoryUrl = findProperty("MAVEN_URL", null)
 			snapshotRepositoryUrl = findProperty("MAVEN_URL_SNAPSHOT", null)
 			repositoryUsername = findProperty("MAVEN_USERNAME", null)
