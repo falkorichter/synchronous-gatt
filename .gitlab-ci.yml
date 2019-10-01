@@ -14,7 +14,7 @@ deploy_snapshot:
   artifacts:
     when: always
     paths:
-    - library/build/outputs/aar
+    - synchronousgatt/build/outputs/aar
   tags:
   - docker
   only:
@@ -28,7 +28,7 @@ deploy_release:
   artifacts:
     when: always
     paths:
-    - library/build/outputs/aar
+    - synchronousgatt/build/outputs/aar
   tags:
   - docker
   only:
