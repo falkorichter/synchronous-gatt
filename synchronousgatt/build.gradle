@@ -38,7 +38,7 @@ mavenPublish {
 			repositoryUsername = findProperty("MAVEN_USERNAME", null)
 			repositoryPassword = findProperty("MAVEN_PASSWORD", null)
 		}
-		uploadJcenter {
+		jcenter {
 			signing = false
 			releaseRepositoryUrl = findProperty("SYNCHRONOUS_GATT_URL", null)
 			snapshotRepositoryUrl = "https"
