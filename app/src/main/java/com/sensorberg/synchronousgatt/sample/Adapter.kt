@@ -1,8 +1,8 @@
 package com.sensorberg.synchronousgatt.sample
 
-import android.support.v7.recyclerview.extensions.ListAdapter
-import android.support.v7.util.DiffUtil
-import android.support.v7.widget.RecyclerView
+import androidx.recyclerview.widget.ListAdapter
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -37,7 +37,7 @@ class Adapter(private val callback: (ScanResult) -> Unit) : ListAdapter<ScanResu
 
 }
 
-class Holder(private val callback: (ScanResult) -> Unit, itemView: View) : RecyclerView.ViewHolder(itemView) {
+class Holder(private val callback: (ScanResult) -> Unit, itemView: View) : androidx.recyclerview.widget.RecyclerView.ViewHolder(itemView) {
 	val title: TextView = itemView.findViewById(R.id.title)
 	val subtitle: TextView = itemView.findViewById(R.id.subtitle)
 	lateinit var data: ScanResult

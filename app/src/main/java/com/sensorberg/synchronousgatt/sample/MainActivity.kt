@@ -5,9 +5,9 @@ import android.bluetooth.BluetoothGattDescriptor
 import android.os.Bundle
 import android.os.ParcelUuid
 import android.os.SystemClock
-import android.support.v7.app.AppCompatActivity
-import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
+import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.sensorberg.permissionbitte.BitteBitte
 import com.sensorberg.permissionbitte.PermissionBitte
 import com.sensorberg.synchronousgatt.GattResult
@@ -27,10 +27,10 @@ class MainActivity : AppCompatActivity(), BitteBitte {
 		.setUseHardwareFilteringIfSupported(false)
 		.build()
 
-	private val serviceUuid = UUID.fromString("6e400001-b5a3-f393-e0a9-e50e24dcca9e")
-	private val characteristicWrite = UUID.fromString("6e400002-b5a3-f393-e0a9-e50e24dcca9e")
-	private val characteristicRead = UUID.fromString("6e400003-b5a3-f393-e0a9-e50e24dcca9e")
-	private val descriptorNotify = UUID.fromString("00002902-0000-1000-8000-00805f9b34fb")
+	private val serviceUuid = UUID.fromString(BuildConfig.SERVICE_UUID)
+	private val characteristicWrite = UUID.fromString(BuildConfig.CHARACTERISTIC_WRITE_UUID)
+	private val characteristicRead = UUID.fromString(BuildConfig.CHARACTERISTIC_READ_UUID)
+	private val descriptorNotify = UUID.fromString(BuildConfig.DESCRIPTOR_NOTIFY_UUID)
 	private val enableNotify = BluetoothGattDescriptor.ENABLE_NOTIFICATION_VALUE
 
 	private val scanner = BluetoothLeScannerCompat.getScanner()
@@ -125,7 +125,7 @@ class MainActivity : AppCompatActivity(), BitteBitte {
 		override fun onScanResult(callbackType: Int, result: ScanResult) {
 			results[result.device.address] = result
 			val data = results.values.filter { it.rssi > -55 }.sortedBy { it.rssi }
-			// 	Timber.v("(${data.size}) onScanResult $result")
+			Timber.v("(${data.size}) onScanResult $result")
 			adapter.submitList(data)
 		}
 	}
