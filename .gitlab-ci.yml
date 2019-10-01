@@ -34,4 +34,4 @@ deploy_release:
   only:
   - tags
   script:
-  - ./gradlew uploadArchives
+  - ./gradlew clean uploadJcenter

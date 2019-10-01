@@ -38,5 +38,12 @@ mavenPublish {
 			repositoryUsername = findProperty("MAVEN_USERNAME", null)
 			repositoryPassword = findProperty("MAVEN_PASSWORD", null)
 		}
+		uploadJcenter {
+			signing = false
+			releaseRepositoryUrl = findProperty("SYNCHRONOUS_GATT_URL", null)
+			snapshotRepositoryUrl = "https"
+			repositoryUsername = findProperty("BINTRAY_USERNAME", null)
+			repositoryPassword = findProperty("BINTRAY_PASSWORD", null)
+		}
 	}
 }
