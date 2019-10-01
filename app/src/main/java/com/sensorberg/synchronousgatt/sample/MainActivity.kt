@@ -40,57 +40,59 @@ class MainActivity : AppCompatActivity(), BitteBitte {
 												 .setServiceUuid(ParcelUuid(serviceUuid))
 												 .build())
 
+	private fun SynchronousGatt.execute() {
+		val startMillis = SystemClock.elapsedRealtime()
+
+		// connect
+		val connection: GattResult.OnConnectionStateChange = connectGatt(this@MainActivity, false, BluetoothDevice.TRANSPORT_LE, 10000)
+		Timber.d(connection.toString())
+
+		// discover
+		val services = discoverServices(4000)
+		Timber.d(services.toString())
+
+		// enable notify
+		val notify = services
+			.getService(serviceUuid)
+			.getCharacteristic(characteristicRead)
+			.getDescriptor(descriptorNotify)
+		notify.value = enableNotify
+		val writeNotify = writeDescriptor(notify, 3000)
+		Timber.d(writeNotify.toString())
+
+		// write something
+		val characteristic = services
+			.getService(serviceUuid)
+			.getCharacteristic(characteristicWrite)
+		characteristic.setValue("hello world\n")
+		val writeChar = writeCharacteristic(characteristic, 3000)
+		Timber.d(writeChar.toString())
+
+		// await read
+		val changed = awaitCharacteristicChange(5000)
+		Timber.d("Changed (${changed.characteristic.uuid} -> $changed")
+
+		// disconnect
+		val disconnection = disconnect(1000)
+		Timber.d(disconnection.toString())
+
+		val time = SystemClock.elapsedRealtime() - startMillis
+		Timber.d("Success! after $time ms")
+	}
+
 	private val adapter = Adapter { scanResult ->
 		Thread {
 			Timber.i("Starting Gatt Connection")
 
-
-			SynchronousGatt(scanResult.device).apply {
-
-				try {
-					val startMillis = SystemClock.elapsedRealtime()
-
-					// connect
-					val connection: GattResult.OnConnectionStateChange = connectGatt(this@MainActivity, false, BluetoothDevice.TRANSPORT_LE, 10000)
-					Timber.d(connection.toString())
-
-					// discover
-					val services = discoverServices(4000)
-					Timber.d(services.toString())
-
-					// enable notify
-					val notify = services
-						.getService(serviceUuid)
-						.getCharacteristic(characteristicRead)
-						.getDescriptor(descriptorNotify)
-					notify.value = enableNotify
-					val writeNotify = writeDescriptor(notify, 3000)
-					Timber.d(writeNotify.toString())
-
-					// write something
-					val characteristic = services
-						.getService(serviceUuid)
-						.getCharacteristic(characteristicWrite)
-					characteristic.setValue("hello world\n")
-					val writeChar = writeCharacteristic(characteristic, 3000)
-					Timber.d(writeChar.toString())
-
-					// await read
-					val changed = awaitCharacteristicChange(5000)
-					Timber.d("Changed (${changed.characteristic.uuid} -> $changed")
-
-					// disconnect
-					val disconnection = disconnect(1000)
-					Timber.d(disconnection.toString())
-
-					val time = SystemClock.elapsedRealtime() - startMillis
-					Timber.d("Success! after $time ms")
-				} catch (e: Exception) {
-					Timber.e(e, "Something went wrong")
-				} finally {
-
-				}
+			val syncGatt = SynchronousGatt(scanResult.device)
+			try {
+				syncGatt.execute()
+			} catch (e: Exception) {
+				Timber.e(e, "Something went wrong")
+			} finally {
+				syncGatt.close()
 			}
+
 			Timber.i("Gatt Connection complete")
 		}.start()
 	}

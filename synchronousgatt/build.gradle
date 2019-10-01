@@ -3,11 +3,11 @@ apply plugin: 'kotlin-android'
 apply plugin: "com.vanniktech.maven.publish"
 
 android {
-	compileSdkVersion 27
+	compileSdkVersion 28
 
 	defaultConfig {
 		minSdkVersion 21
-		targetSdkVersion 27
+		targetSdkVersion 28
 		versionCode 1
 		versionName "1.0"
 
@@ -25,8 +25,7 @@ android {
 }
 
 dependencies {
-	implementation 'com.android.support:support-annotations:27.1.1'
-	implementation "com.sensorberg.libs:executioner:0.4.1"
+	implementation "com.sensorberg.libs:executioner:1.0.0"
 	implementation "com.jakewharton.timber:timber:4.7.1"
 }
 
