@@ -5,6 +5,8 @@ Wraps Android Gatt operations into a sane synchronous API
 
 ## Setup:
 
+[ ![Download](https://api.bintray.com/packages/sensorberg/maven/synchronous-gatt/images/download.svg) ](https://bintray.com/sensorberg/maven/synchronous-gatt/_latestVersion)
+
 On gradle use `jcenter()` and apply the library `implementation 'com.sensorberg.libs-synchronous-gatt:<latest>'`
 
 ## Usage:
