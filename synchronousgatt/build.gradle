@@ -40,7 +40,7 @@ mavenPublish {
 		}
 		jcenter {
 			signing = false
-			releaseRepositoryUrl = findProperty("SYNCHRONOUS_GATT_URL", null)
+			releaseRepositoryUrl = "https://bintray.com/api/v1/maven/sensorberg/maven/synchronous-gatt/;publish=1"
 			snapshotRepositoryUrl = "https"
 			repositoryUsername = findProperty("BINTRAY_USERNAME", null)
 			repositoryPassword = findProperty("BINTRAY_PASSWORD", null)
