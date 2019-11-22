@@ -16,17 +16,17 @@ object Versions {
 
   const val constraintlayout: String = "1.1.3"
 
-  const val recyclerview: String = "1.0.0" // available: "1.1.0"
+  const val recyclerview: String = "1.1.0"
 
-  const val aapt2: String = "3.5.0-5435860" // available: "3.5.2-5435860"
+  const val aapt2: String = "3.5.2-5435860"
 
-  const val com_android_tools_build_gradle: String = "3.5.0" // available: "3.5.2"
+  const val com_android_tools_build_gradle: String = "3.5.2"
 
-  const val lint_gradle: String = "26.5.0" // available: "26.5.2"
+  const val lint_gradle: String = "26.5.2"
 
   const val timber: String = "4.7.1"
 
-  const val executioner: String = "1.0.0" // available: "1.0.1"
+  const val executioner: String = "1.0.1"
 
   const val permission_bitte: String = "0.5.0" // available: "1.0.2"
 
@@ -36,7 +36,7 @@ object Versions {
 
   const val scanner: String = "1.4.3"
 
-  const val org_jetbrains_kotlin: String = "1.3.50" // available: "1.3.60"
+  const val org_jetbrains_kotlin: String = "1.3.60"
 
   /**
    *
