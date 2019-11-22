@@ -2,11 +2,11 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 
 android {
-	compileSdkVersion 28
+	compileSdkVersion android_compileSdkVersion
 	defaultConfig {
 		applicationId "com.sensorberg.synchronousgatt.sample"
 		minSdkVersion 23
-		targetSdkVersion 28
+		targetSdkVersion android_targetSdkVersion
 		versionCode 1
 		versionName "1.0"
 		testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
@@ -25,12 +25,13 @@ android {
 }
 
 dependencies {
-	implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 	implementation project(':synchronousgatt')
-	implementation "com.jakewharton.timber:timber:4.7.1"
-	implementation 'androidx.appcompat:appcompat:1.1.0'
-	implementation 'androidx.recyclerview:recyclerview:1.0.0'
-	implementation 'com.sensorberg.libs:permission-bitte:0.5.0'
-	implementation 'no.nordicsemi.android.support.v18:scanner:1.4.3'
-	implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
+
+	implementation Libs.kotlin_stdlib_jdk7
+	implementation Libs.timber
+	implementation Libs.appcompat
+	implementation Libs.recyclerview
+	implementation Libs.permission_bitte
+	implementation Libs.scanner
+	implementation Libs.constraintlayout
 }

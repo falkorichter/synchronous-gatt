@@ -3,11 +3,11 @@ apply plugin: 'kotlin-android'
 apply plugin: "com.vanniktech.maven.publish"
 
 android {
-	compileSdkVersion 28
+	compileSdkVersion android_compileSdkVersion
 
 	defaultConfig {
 		minSdkVersion 21
-		targetSdkVersion 28
+		targetSdkVersion android_targetSdkVersion
 		versionCode 1
 		versionName "1.0"
 
@@ -25,8 +25,8 @@ android {
 }
 
 dependencies {
-	implementation "com.sensorberg.libs:executioner:1.0.0"
-	implementation "com.jakewharton.timber:timber:4.7.1"
+	implementation Libs.executioner
+	implementation Libs.timber
 }
 
 mavenPublish {
